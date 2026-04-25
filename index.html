@@ -176,7 +176,7 @@
         </div>
         
         <div class="form-container">
-            <form id="leadForm">
+            <form id="leadForm" action="https://formsubmit.co/smithmarketing2@gmail.com" method="POST">
                 <div class="form-group">
                     <label for="name">Full Name</label>
                     <input type="text" id="name" name="name" placeholder="Enter your name" required>
@@ -189,7 +189,11 @@
                     <label for="website">Website URL</label>
                     <input type="url" id="website" name="website" placeholder="https://yourwebsite.com" required>
                 </div>
-                <input type="hidden" name="source" value="free-aeo-audit-lead-page">
+                <!-- Formsubmit.co settings -->
+                <input type="hidden" name="_subject" value="New AEO Website Audit Request">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://digitalmarketingproreviews.com">
+                <input type="hidden" name="_template" value="table">
                 <button type="submit" class="submit-btn" id="submitBtn">Get My Free Audit</button>
                 <div id="formMessage"></div>
             </form>
@@ -198,47 +202,12 @@
     </div>
 
     <script>
-        const FORM_ACTION = 'https://script.google.com/macros/s/AKfycbyNT_7CViEcPf6RGqjfybGrkcXwcOUpAxv8YLaKD6uUbnEv1gwM_Spd-0EFTFnInZ2r/exec';
-        const REDIRECT_URL = 'https://digitalmarketingproreviews.com';
-        
-        document.getElementById('leadForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
+        // Form now submits directly to Formsubmit.co
+        // No JavaScript needed - pure HTML form submission
+        document.getElementById('leadForm').addEventListener('submit', function() {
             var btn = document.getElementById('submitBtn');
-            var msg = document.getElementById('formMessage');
-            var form = this;
-            
             btn.disabled = true;
             btn.textContent = 'Submitting...';
-            msg.style.display = 'block';
-            msg.className = 'success';
-            msg.textContent = 'Submitting your request...';
-            
-            // Build query string from form data
-            var formData = new FormData(form);
-            var params = new URLSearchParams();
-            formData.forEach(function(value, key) {
-                params.append(key, value);
-            });
-            
-            // Submit using fetch with no-cors mode
-            fetch(FORM_ACTION + '?' + params.toString(), {
-                method: 'GET',
-                mode: 'no-cors'
-            }).then(function() {
-                msg.textContent = 'Thanks! Your audit request has been received. Redirecting you now...';
-                form.reset();
-                setTimeout(function() {
-                    window.location.href = REDIRECT_URL;
-                }, 1500);
-            }).catch(function() {
-                // Even on error, assume it worked (no-cors hides the response)
-                msg.textContent = 'Thanks! Your audit request has been received. Redirecting you now...';
-                form.reset();
-                setTimeout(function() {
-                    window.location.href = REDIRECT_URL;
-                }, 1500);
-            });
         });
     </script>
 </body>
