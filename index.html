@@ -176,7 +176,7 @@
         </div>
         
         <div class="form-container">
-            <form id="leadForm">
+            <form id="leadForm" method="POST" action="https://script.google.com/macros/s/AKfycbyNT_7CViEcPf6RGqjfybGrkcXwcOUpAxv8YLaKD6uUbnEv1gwM_Spd-0EFTFnInZ2r/exec" target="hidden-iframe">
                 <div class="form-group">
                     <label for="name">Full Name</label>
                     <input type="text" id="name" name="name" placeholder="Enter your name" required>
@@ -201,11 +201,9 @@
     <iframe name="hidden-iframe" id="hidden-iframe" style="display:none;"></iframe>
     
     <script>
-        const FORM_ACTION = 'https://script.google.com/macros/s/AKfycbyNT_7CViEcPf6RGqjfybGrkcXwcOUpAxv8YLaKD6uUbnEv1gwM_Spd-0EFTFnInZ2r/exec';
         const REDIRECT_URL = 'https://digitalmarketingproreviews.com';
         
         document.getElementById('leadForm').addEventListener('submit', function(e) {
-            e.preventDefault();
             var btn = document.getElementById('submitBtn');
             var msg = document.getElementById('formMessage');
             var form = this;
@@ -216,45 +214,20 @@
             msg.className = 'success';
             msg.textContent = 'Submitting your request...';
             
-            // Create a hidden form to submit to the iframe
-            var hiddenForm = document.createElement('form');
-            hiddenForm.method = 'POST';
-            hiddenForm.action = FORM_ACTION;
-            hiddenForm.target = 'hidden-iframe';
-            hiddenForm.style.display = 'none';
-            
-            // Add all form fields
-            var formData = new FormData(form);
-            formData.forEach(function(value, key) {
-                var input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = key;
-                input.value = value;
-                hiddenForm.appendChild(input);
-            });
-            
-            // Add form to body, submit it, then remove it
-            document.body.appendChild(hiddenForm);
-            
-            // Handle iframe load event
+            // Handle iframe load (form submitted successfully)
             var iframe = document.getElementById('hidden-iframe');
             iframe.onload = function() {
                 msg.textContent = 'Thanks! Your audit request has been received. Redirecting you now...';
                 form.reset();
                 setTimeout(function() {
                     window.location.href = REDIRECT_URL;
-                }, 2000);
+                }, 1500);
             };
             
-            // Submit the form
-            hiddenForm.submit();
-            
-            // Fallback: redirect after 3 seconds even if iframe doesn't load
+            // Fallback redirect
             setTimeout(function() {
-                if (btn.disabled) {
-                    window.location.href = REDIRECT_URL;
-                }
-            }, 3000);
+                window.location.href = REDIRECT_URL;
+            }, 4000);
         });
     </script>
 </body>
