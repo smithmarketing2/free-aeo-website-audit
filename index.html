@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free AEO Website Audit | Smith Media Marketing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3a5f 0%, #0d2137 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .headline {
+            font-size: clamp(1.75rem, 5vw, 2.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fff 0%, #94c5ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subheadline {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin-bottom: 40px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.05);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            color: #ffffff;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        .form-group input::placeholder {
+            color: #64748b;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59,130,246,0.4);
+        }
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .privacy-text {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+        }
+        .benefit-item::before {
+            content: "✓";
+            color: #22c55e;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        #formMessage {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .success { 
+            background: rgba(34, 197, 94, 0.2); 
+            color: #4ade80; 
+        }
+        .error { 
+            background: rgba(239, 68, 68, 0.2); 
+            color: #f87171; 
+        }
+        @media (max-width: 600px) {
+            .form-container { padding: 30px 20px; }
+            .benefits { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="headline">Get a FREE AEO Website Audit & Uncover Hidden Opportunities</h1>
+        <p class="subheadline">Discover exactly what's holding your website back from ranking higher and converting more visitors into customers</p>
+        
+        <div class="video-container">
+            <iframe src="https://media.publit.io/file/cad7e60c-7ad7-4c8b-9207-f3b05809d1ce.html" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="benefits">
+            <div class="benefit-item">Comprehensive technical SEO analysis</div>
+            <div class="benefit-item">AEO (Ask Engine Optimization) opportunity scan</div>
+            <div class="benefit-item">Actionable recommendations you can implement immediately</div>
+            <div class="benefit-item">Competitor insights and gap analysis</div>
+            <div class="benefit-item">Personalized video walkthrough of your audit results</div>
+        </div>
+        
+        <div class="form-container">
+            <form id="leadForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="website">Website URL</label>
+                    <input type="url" id="website" name="website" placeholder="https://yourwebsite.com" required>
+                </div>
+                <input type="hidden" name="source" value="free-aeo-audit-lead-page">
+                <button type="submit" class="submit-btn" id="submitBtn">Get My Free Audit</button>
+                <div id="formMessage"></div>
+            </form>
+            <p class="privacy-text">We respect your privacy. Unsubscribe anytime.</p>
+        </div>
+    </div>
+
+    <script>
+        const FORM_ACTION = 'https://script.google.com/macros/s/AKfycbx-your-script-id-here/exec';
+        const REDIRECT_URL = 'https://digitalmarketingproreviews.com';
+        
+        document.getElementById('leadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var btn = document.getElementById('submitBtn');
+            var msg = document.getElementById('formMessage');
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+            
+            var params = new URLSearchParams(new FormData(this));
+            params.append('timestamp', new Date().toISOString());
+            
+            fetch(FORM_ACTION, { 
+                method: 'POST', 
+                body: params,
+                mode: 'no-cors'
+            })
+            .then(() => {
+                msg.style.display = 'block';
+                msg.className = 'success';
+                msg.textContent = 'Thanks! Your audit request has been received. Redirecting you now...';
+                setTimeout(() => {
+                    window.location.href = REDIRECT_URL;
+                }, 2000);
+            })
+            .catch(() => {
+                msg.style.display = 'block';
+                msg.className = 'error';
+                msg.textContent = 'Error submitting. Please try again.';
+                btn.disabled = false;
+                btn.textContent = 'Get My Free Audit';
+            });
+        });
+    </script>
+</body>
+</html>
