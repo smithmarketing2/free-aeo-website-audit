@@ -197,6 +197,9 @@
         </div>
     </div>
 
+    <!-- Hidden iframe for form submission -->
+    <iframe name="hidden-iframe" id="hidden-iframe" style="display:none;"></iframe>
+    
     <script>
         const FORM_ACTION = 'https://script.google.com/macros/s/AKfycbyNT_7CViEcPf6RGqjfybGrkcXwcOUpAxv8YLaKD6uUbnEv1gwM_Spd-0EFTFnInZ2r/exec';
         const REDIRECT_URL = 'https://digitalmarketingproreviews.com';
@@ -209,47 +212,49 @@
             
             btn.disabled = true;
             btn.textContent = 'Submitting...';
+            msg.style.display = 'block';
+            msg.className = 'success';
+            msg.textContent = 'Submitting your request...';
             
-            // Get form data
+            // Create a hidden form to submit to the iframe
+            var hiddenForm = document.createElement('form');
+            hiddenForm.method = 'POST';
+            hiddenForm.action = FORM_ACTION;
+            hiddenForm.target = 'hidden-iframe';
+            hiddenForm.style.display = 'none';
+            
+            // Add all form fields
             var formData = new FormData(form);
-            var data = {};
             formData.forEach(function(value, key) {
-                data[key] = value;
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = value;
+                hiddenForm.appendChild(input);
             });
             
-            // Create URL-encoded string
-            var urlEncodedData = Object.keys(data)
-                .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
-                .join('&');
+            // Add form to body, submit it, then remove it
+            document.body.appendChild(hiddenForm);
             
-            // Use XMLHttpRequest for better compatibility with Google Apps Script
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', FORM_ACTION, true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // Handle iframe load event
+            var iframe = document.getElementById('hidden-iframe');
+            iframe.onload = function() {
+                msg.textContent = 'Thanks! Your audit request has been received. Redirecting you now...';
+                form.reset();
+                setTimeout(function() {
+                    window.location.href = REDIRECT_URL;
+                }, 2000);
+            };
             
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    // Show success (even if we can't read response due to CORS)
-                    msg.style.display = 'block';
-                    msg.className = 'success';
-                    msg.textContent = 'Thanks! Your audit request has been received. Redirecting you now...';
-                    form.reset();
-                    
-                    setTimeout(function() {
-                        window.location.href = REDIRECT_URL;
-                    }, 2000);
+            // Submit the form
+            hiddenForm.submit();
+            
+            // Fallback: redirect after 3 seconds even if iframe doesn't load
+            setTimeout(function() {
+                if (btn.disabled) {
+                    window.location.href = REDIRECT_URL;
                 }
-            };
-            
-            xhr.onerror = function() {
-                msg.style.display = 'block';
-                msg.className = 'error';
-                msg.textContent = 'Error submitting. Please try again.';
-                btn.disabled = false;
-                btn.textContent = 'Get My Free Audit';
-            };
-            
-            xhr.send(urlEncodedData);
+            }, 3000);
         });
     </script>
 </body>
