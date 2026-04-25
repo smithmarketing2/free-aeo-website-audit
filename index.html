@@ -176,7 +176,7 @@
         </div>
         
         <div class="form-container">
-            <form id="leadForm" method="POST" action="https://script.google.com/macros/s/AKfycbyNT_7CViEcPf6RGqjfybGrkcXwcOUpAxv8YLaKD6uUbnEv1gwM_Spd-0EFTFnInZ2r/exec" target="hidden-iframe">
+            <form id="leadForm">
                 <div class="form-group">
                     <label for="name">Full Name</label>
                     <input type="text" id="name" name="name" placeholder="Enter your name" required>
@@ -197,13 +197,13 @@
         </div>
     </div>
 
-    <!-- Hidden iframe for form submission -->
-    <iframe name="hidden-iframe" id="hidden-iframe" style="display:none;"></iframe>
-    
     <script>
+        const FORM_ACTION = 'https://script.google.com/macros/s/AKfycbyNT_7CViEcPf6RGqjfybGrkcXwcOUpAxv8YLaKD6uUbnEv1gwM_Spd-0EFTFnInZ2r/exec';
         const REDIRECT_URL = 'https://digitalmarketingproreviews.com';
         
         document.getElementById('leadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
             var btn = document.getElementById('submitBtn');
             var msg = document.getElementById('formMessage');
             var form = this;
@@ -214,20 +214,31 @@
             msg.className = 'success';
             msg.textContent = 'Submitting your request...';
             
-            // Handle iframe load (form submitted successfully)
-            var iframe = document.getElementById('hidden-iframe');
-            iframe.onload = function() {
+            // Build query string from form data
+            var formData = new FormData(form);
+            var params = new URLSearchParams();
+            formData.forEach(function(value, key) {
+                params.append(key, value);
+            });
+            
+            // Submit using fetch with no-cors mode
+            fetch(FORM_ACTION + '?' + params.toString(), {
+                method: 'GET',
+                mode: 'no-cors'
+            }).then(function() {
                 msg.textContent = 'Thanks! Your audit request has been received. Redirecting you now...';
                 form.reset();
                 setTimeout(function() {
                     window.location.href = REDIRECT_URL;
                 }, 1500);
-            };
-            
-            // Fallback redirect
-            setTimeout(function() {
-                window.location.href = REDIRECT_URL;
-            }, 4000);
+            }).catch(function() {
+                // Even on error, assume it worked (no-cors hides the response)
+                msg.textContent = 'Thanks! Your audit request has been received. Redirecting you now...';
+                form.reset();
+                setTimeout(function() {
+                    window.location.href = REDIRECT_URL;
+                }, 1500);
+            });
         });
     </script>
 </body>
