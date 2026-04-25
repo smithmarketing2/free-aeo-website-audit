@@ -205,32 +205,51 @@
             e.preventDefault();
             var btn = document.getElementById('submitBtn');
             var msg = document.getElementById('formMessage');
+            var form = this;
+            
             btn.disabled = true;
             btn.textContent = 'Submitting...';
             
-            var params = new URLSearchParams(new FormData(this));
-            params.append('timestamp', new Date().toISOString());
+            // Get form data
+            var formData = new FormData(form);
+            var data = {};
+            formData.forEach(function(value, key) {
+                data[key] = value;
+            });
             
-            fetch(FORM_ACTION, { 
-                method: 'POST', 
-                body: params,
-                mode: 'no-cors'
-            })
-            .then(() => {
-                msg.style.display = 'block';
-                msg.className = 'success';
-                msg.textContent = 'Thanks! Your audit request has been received. Redirecting you now...';
-                setTimeout(() => {
-                    window.location.href = REDIRECT_URL;
-                }, 2000);
-            })
-            .catch(() => {
+            // Create URL-encoded string
+            var urlEncodedData = Object.keys(data)
+                .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+                .join('&');
+            
+            // Use XMLHttpRequest for better compatibility with Google Apps Script
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', FORM_ACTION, true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    // Show success (even if we can't read response due to CORS)
+                    msg.style.display = 'block';
+                    msg.className = 'success';
+                    msg.textContent = 'Thanks! Your audit request has been received. Redirecting you now...';
+                    form.reset();
+                    
+                    setTimeout(function() {
+                        window.location.href = REDIRECT_URL;
+                    }, 2000);
+                }
+            };
+            
+            xhr.onerror = function() {
                 msg.style.display = 'block';
                 msg.className = 'error';
                 msg.textContent = 'Error submitting. Please try again.';
                 btn.disabled = false;
                 btn.textContent = 'Get My Free Audit';
-            });
+            };
+            
+            xhr.send(urlEncodedData);
         });
     </script>
 </body>
